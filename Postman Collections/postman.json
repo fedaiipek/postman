@@ -1,0 +1,106 @@
+{
+	"info": {
+		"_postman_id": "da9f1de5-28c8-4ddc-969a-36e185f03922",
+		"name": "Users",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.globals.set(\"userId\", pm.response.json().id);"
+						],
+						"id": "8282f34c-46a0-431b-9fe4-b5fec9027089"
+					}
+				}
+			],
+			"_postman_id": "f3b6d06c-4b1e-436d-96e5-cf39410cbb5c",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "G-Token",
+						"value": "ROM831ESV"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"taylonr@mailinator.com\",\n\t\"firstName\": \"Nate\",\n\t\"lastName\": \"Taylor\"\n}",
+					"options": {}
+				},
+				"url": "http://{{host}}/users"
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"const user = pm.response.json();",
+							"",
+							"pm.test(\"Updated email\", function () {",
+							"    pm.expect(user.email).to.eql('taylonr@gmail.com');",
+							"});",
+							"",
+							"pm.test(\"First name unchanged\", function () {",
+							"    pm.expect(user.firstName).to.eql('Nate');",
+							"});",
+							"",
+							"pm.test(\"Last name unchanged\", function () {",
+							"    pm.expect(user.lastName).to.eql('Taylor'); ",
+							"});",
+							"",
+							"pm.globals.unset(\"userId\");",
+							""
+						],
+						"id": "e49f83ee-c4aa-42c6-859d-d46a861a177d"
+					}
+				}
+			],
+			"_postman_id": "580e14cc-7dde-4bcb-83bd-76d4bc075072",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{auth}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "G-Token",
+						"value": "ROM831ESV"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"taylonr@gmail.com\"\n}",
+					"options": {}
+				},
+				"url": "http://{{host}}/users/{{userId}}"
+			},
+			"response": []
+		}
+	]
+}
